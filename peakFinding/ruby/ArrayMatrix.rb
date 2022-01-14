@@ -28,6 +28,12 @@ class ArrayMatrix
     @raw.count
   end
 
+  def self.subset(col_start, col_end, matrix)
+    matrix.map do |row|
+      row.slice(col_start, (col_end + 1))
+    end
+  end
+
   def col_max(column)
     values = column_values(column)
     values.sort_by { |hash| hash[:val] }.last
@@ -51,5 +57,11 @@ class ArrayMatrix
       left: left_col_values,
       right: right_col_values
     }
+  end
+
+  def largest_neighbor(neighbors = {})
+    left, right = neighbors[:left], neighbors[:right]
+    return { left: left } if left[:val] >= right[:val]
+    { right: left }
   end
 end
