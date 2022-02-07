@@ -52,4 +52,31 @@ module Solution
     end
     true
   end
+
+=begin
+Recursive solution:
+
+TODO: Please clarify this, it's a bit confusing even as I'm writing it.
+
+For each iteration the first value in our served order list should
+equal the value of either the take_out or dine_in orders. When we find which,
+we create a subset excluding the first arrays.
+=end
+  def verify_orders_recursively(take_out:, dine_in:, served:)
+    return true if served.empty?
+
+    if take_out.count > 0 && take_out.first.eql?(served.first)
+      # Call the function again excluding the first values in the
+      # take_out and served array
+      verify_orders_recursively(
+        take_out: take_out[1..-1], dine_in: dine_in, served: served[1..-1]
+      )
+    elsif dine_in.count > 0 && dine_in.first.eql?(served.first)
+      verify_orders_recursively(
+        take_out: take_out, dine_in: dine_in[1..-1], served: served[1..-1]
+      )
+    else
+      false
+    end
+  end
 end
